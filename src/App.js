@@ -13,7 +13,7 @@ const App = () => {
   useEffect(() => {
     const fetchWeatherData = async () => {
       const API_KEY = '5d4abaf2410c48deb73453548faa832a';  
-      const CITY = 'jalgaon';
+      const CITY = 'malegaon';
       const URL = `https://api.weatherbit.io/v2.0/forecast/daily?city=${CITY}&key=${API_KEY}&days=7&units=M`;
 
       try {
