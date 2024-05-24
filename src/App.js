@@ -60,14 +60,14 @@ const App = () => {
   }
 
   return (
-    <Container maxWidth="md" style={{ marginTop: '20px' }}>
-      <Typography variant="h4" component="div" gutterBottom>
+    <Container maxWidth="md" className="container">
+      <Typography variant="h4" component="div" gutterBottom className="header">
         Weather and Notepad Application
       </Typography>
 
       <Grid container spacing={2}>
         <Grid item xs={3}>
-          <Card>
+          <Card className="card animated fadeInLeft">
             <CardContent>
               <Typography variant="h6">Avg Temp of Week</Typography>
               <Typography variant="h4">{weatherData.avgTemp.toFixed(2)}°C</Typography>
@@ -75,7 +75,7 @@ const App = () => {
           </Card>
         </Grid>
         <Grid item xs={3}>
-          <Card>
+          <Card className="card animated fadeInDown">
             <CardContent>
               <Typography variant="h6">Avg Rainfall of Week</Typography>
               <Typography variant="h4">{weatherData.avgRainfall.toFixed(2)} mm</Typography>
@@ -83,7 +83,7 @@ const App = () => {
           </Card>
         </Grid>
         <Grid item xs={3}>
-          <Card>
+          <Card className="card animated fadeInRight">
             <CardContent>
               <Typography variant="h6">Avg Humidity of Week</Typography>
               <Typography variant="h4">{weatherData.avgHumidity.toFixed(2)}%</Typography>
@@ -91,7 +91,7 @@ const App = () => {
           </Card>
         </Grid>
         <Grid item xs={3}>
-          <Card>
+          <Card className="card animated fadeInUp">
             <CardContent>
               <Typography variant="h6">Current Temp</Typography>
               <Typography variant="h4">{weatherData.currentTemp.toFixed(2)}°C</Typography>
@@ -100,10 +100,10 @@ const App = () => {
         </Grid>
       </Grid>
 
-      <Typography variant="h5" component="div" gutterBottom style={{ marginTop: '20px' }}>
+      <Typography variant="h5" component="div" gutterBottom className="section-header animated fadeIn">
         Avg Temperature of Previous Week
       </Typography>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={300} className="chart-container animated fadeIn">
         <BarChart data={weatherData.weeklyTemp} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="day" />
@@ -114,7 +114,7 @@ const App = () => {
         </BarChart>
       </ResponsiveContainer>
 
-      <Typography variant="h5" component="div" gutterBottom style={{ marginTop: '20px' }}>
+      <Typography variant="h5" component="div" gutterBottom className="section-header animated fadeIn">
         Notepad
       </Typography>
       <TextField
@@ -123,14 +123,14 @@ const App = () => {
         value={newNote}
         onChange={(e) => setNewNote(e.target.value)}
         fullWidth
-        style={{ marginBottom: '10px' }}
+        className="note-input animated fadeIn"
       />
-      <Button variant="contained" color="primary" onClick={handleAddNote} fullWidth>
+      <Button variant="contained" color="primary" onClick={handleAddNote} fullWidth className="button animated fadeIn">
         Add Note
       </Button>
       <List>
         {notes.map((note, index) => (
-          <ListItem key={index}>
+          <ListItem key={index} className="note-item animated fadeIn">
             <ListItemText primary={note} />
             <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteNote(index)}>
               <DeleteIcon />

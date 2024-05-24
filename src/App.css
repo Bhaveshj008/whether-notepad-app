@@ -1,23 +1,45 @@
-body {
-  background-color: #f0f2f5;
-  font-family: 'Roboto', sans-serif;
-}
-
-.MuiContainer-root {
-  background-color: #fff;
+.container {
+  background-color: #f0f0f0;
   padding: 20px;
+}
+
+.card {
+  border: 1px solid #ccc;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
-.MuiCard-root {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+.section-header {
+  margin-top: 20px;
 }
 
-.MuiButton-root {
-  margin-top: 10px;
+.chart-container {
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.note-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.note-item {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
 }
