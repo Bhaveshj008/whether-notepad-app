@@ -9,34 +9,50 @@ const App = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [notes, setNotes] = useState(["Sample note 1", "Sample note 2"]);
   const [newNote, setNewNote] = useState('');
+  const [city, setCity] = useState('malegaon');
+  const [inputCity, setInputCity] = useState('');
+  const [error, setError] = useState('');
+
+  const fetchWeatherData = async (cityName) => {
+    const API_KEY = '5d4abaf2410c48deb73453548faa832a';
+    const URL = `https://api.weatherbit.io/v2.0/forecast/daily?city=${cityName}&key=${API_KEY}&days=7&units=M`;
+
+    try {
+      const response = await axios.get(URL);
+      const data = response.data;
+
+      setWeatherData({
+        avgTemp: data.data.reduce((acc, day) => acc + day.temp, 0) / data.data.length,
+        avgRainfall: data.data.reduce((acc, day) => acc + (day.precip || 0), 0) / data.data.length,
+        avgHumidity: data.data.reduce((acc, day) => acc + day.rh, 0) / data.data.length,
+        currentTemp: data.data[0].temp,
+        weeklyTemp: data.data.map((day, index) => ({
+          day: `Day ${index + 1}`,
+          temp: day.temp
+        }))
+      });
+      setError('');
+    } catch (error) {
+      setError('Please enter a correct city name.');
+      console.error('Error fetching weather data', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchWeatherData = async () => {
-      const API_KEY = '5d4abaf2410c48deb73453548faa832a';  
-      const CITY = 'london';
-      const URL = `https://api.weatherbit.io/v2.0/forecast/daily?city=${CITY}&key=${API_KEY}&days=7&units=M`;
+    fetchWeatherData(city);
+  }, [city]);
 
-      try {
-        const response = await axios.get(URL);
-        const data = response.data;
+  const handleCityChange = (e) => {
+    setInputCity(e.target.value);
+  };
 
-        setWeatherData({
-          avgTemp: data.data.reduce((acc, day) => acc + day.temp, 0) / data.data.length,
-          avgRainfall: data.data.reduce((acc, day) => acc + (day.precip || 0), 0) / data.data.length,
-          avgHumidity: data.data.reduce((acc, day) => acc + day.rh, 0) / data.data.length,
-          currentTemp: data.data[0].temp,
-          weeklyTemp: data.data.map((day, index) => ({
-            day: `Day ${index + 1}`,
-            temp: day.temp
-          }))
-        });
-      } catch (error) {
-        console.error('Error fetching weather data', error);
-      }
-    };
-
-    fetchWeatherData();
-  }, []);
+  const handleCitySubmit = () => {
+    if (inputCity.trim()) {
+      setCity(inputCity.trim());
+    } else {
+      setError('Please enter a correct city name.');
+    }
+  };
 
   const handleDeleteNote = (index) => {
     setNotes(notes.filter((_, i) => i !== index));
@@ -63,6 +79,33 @@ const App = () => {
     <Container maxWidth="md" className="container">
       <Typography variant="h4" component="div" gutterBottom className="header">
         Weather and Notepad Application
+      </Typography>
+
+      <Grid container spacing={2} alignItems="center" className="margin-bottom">
+        <Grid item xs={10}>
+          <TextField
+            label="Enter City Name"
+            variant="outlined"
+            value={inputCity}
+            onChange={handleCityChange}
+            fullWidth
+            className="city-input animated fadeIn"
+          />
+        </Grid>
+        <Grid item xs={2}>
+          <Button variant="contained" color="primary" onClick={handleCitySubmit} fullWidth className="button animated fadeIn">
+            Go
+          </Button>
+        </Grid>
+      </Grid>
+      {error && (
+        <Typography color="error" variant="body1" gutterBottom className="error animated fadeIn">
+          {error}
+        </Typography>
+      )}
+
+      <Typography variant="h5" component="div" gutterBottom className="city-name animated fadeIn">
+        Weather details for {city.charAt(0).toUpperCase() + city.slice(1)}
       </Typography>
 
       <Grid container spacing={2}>
